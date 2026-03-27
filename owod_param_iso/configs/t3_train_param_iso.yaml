@@ -1,0 +1,13 @@
+_BASE_: "../../configs/OWOD/t3/t3_train.yaml"
+OUTPUT_DIR: "./output/t3_param_iso"
+MODEL:
+  WEIGHTS: "./output/t2_param_iso/model_final.pth"
+OWOD:
+  INCREMENTAL:
+    PARAM_ISOLATION:
+      ENABLED: True
+      FREEZE_BACKBONE: True
+      FREEZE_PROPOSAL_GENERATOR: True
+      FREEZE_ROI_BOX_FEATURE_EXTRACTOR: True
+      FREEZE_OLD_CLASSIFIER: True
+      FREEZE_OLD_BBOX_REG: True
