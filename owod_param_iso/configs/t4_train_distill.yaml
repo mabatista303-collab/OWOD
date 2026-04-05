@@ -1,0 +1,12 @@
+_BASE_: "../../configs/OWOD/t4/t4_train.yaml"
+OUTPUT_DIR: "./output/t4_distill"
+MODEL:
+  WEIGHTS: "./output/t3_distill/model_final.pth"
+OWOD:
+  INCREMENTAL:
+    DISTILLATION:
+      ENABLED: True
+      TEACHER_WEIGHTS: "./output/t3_distill/model_final.pth"
+      TEMPERATURE: 2.0
+      CLS_WEIGHT: 1.0
+      BBOX_WEIGHT: 1.0
