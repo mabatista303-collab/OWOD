@@ -37,6 +37,22 @@ class DistillationTrainer(DefaultTrainer):
         self.teacher_model = self._build_teacher_model(cfg)
 
     @classmethod
+    def build_train_loader(cls, cfg):
+        replay_cfg = cfg.OWOD.INCREMENTAL.REPLAY
+        if replay_cfg.ENABLED and replay_cfg.TRAIN_DATASET:
+            loader_cfg = cfg.clone()
+            loader_cfg.defrost()
+            loader_cfg.DATASETS.TRAIN = (replay_cfg.TRAIN_DATASET,)
+            loader_cfg.freeze()
+            logging.getLogger(__name__).info(
+                "Replay distillation enabled. Using replay dataset %s instead of %s",
+                replay_cfg.TRAIN_DATASET,
+                cfg.DATASETS.TRAIN,
+            )
+            return super().build_train_loader(loader_cfg)
+        return super().build_train_loader(cfg)
+
+    @classmethod
     def build_evaluator(cls, cfg, dataset_name, output_folder=None):
         if output_folder is None:
             output_folder = os.path.join(cfg.OUTPUT_DIR, "inference")

@@ -19,6 +19,20 @@ def add_param_iso_config(cfg):
     cfg.OWOD.INCREMENTAL.PARAM_ISOLATION.FREEZE_OLD_BBOX_REG = False
 
 
+def add_replay_config(cfg):
+    if not hasattr(cfg, "OWOD"):
+        cfg.OWOD = CN()
+
+    if not hasattr(cfg.OWOD, "INCREMENTAL"):
+        cfg.OWOD.INCREMENTAL = CN()
+
+    if not hasattr(cfg.OWOD.INCREMENTAL, "REPLAY"):
+        cfg.OWOD.INCREMENTAL.REPLAY = CN()
+
+    cfg.OWOD.INCREMENTAL.REPLAY.ENABLED = False
+    cfg.OWOD.INCREMENTAL.REPLAY.TRAIN_DATASET = ""
+
+
 def add_distillation_config(cfg):
     if not hasattr(cfg, "OWOD"):
         cfg.OWOD = CN()

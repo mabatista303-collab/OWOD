@@ -1,0 +1,21 @@
+_BASE_: "./t2_train_distill.yaml"
+OUTPUT_DIR: "./output/t2_replay_distill"
+MODEL:
+  WEIGHTS: "./output/t2_distill/model_final.pth"
+SOLVER:
+  STEPS: (50000, 60000)
+  MAX_ITER: 74000
+  WARMUP_ITERS: 0
+OWOD:
+  ENABLE_CLUSTERING: False
+  ENABLE_THRESHOLD_AUTOLABEL_UNK: False
+  INCREMENTAL:
+    DISTILLATION:
+      ENABLED: True
+      TEACHER_WEIGHTS: "./output/t1/model_final.pth"
+      TEMPERATURE: 2.0
+      CLS_WEIGHT: 1.0
+      BBOX_WEIGHT: 1.0
+    REPLAY:
+      ENABLED: True
+      TRAIN_DATASET: "t2_voc_coco_2007_ft"
